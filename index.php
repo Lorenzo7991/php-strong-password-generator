@@ -62,7 +62,10 @@ if (isset($_GET['generate_password'])) {
                 </form>
                 <?php if (!empty($generatedPassword)): ?>
                     <div class="alert bg-success mt-5" role="alert">
-                        <?= $generatedPassword; ?>
+                        <strong>Password generated:</strong>
+                        <i>
+                            <?= $generatedPassword; ?>
+                        </i>
                     </div>
                 <?php endif; ?>
             </div>
