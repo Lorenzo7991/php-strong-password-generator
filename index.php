@@ -5,6 +5,7 @@ session_start(); // Start the session
 
 $errorMessage = '';
 $alertClass = '';
+$avoidRepetition = isset($_GET['avoid_repetition']) && $_GET['avoid_repetition'] === 'on';
 
 // Check if the form has been submitted
 if (isset($_GET['generate_password'])) {
@@ -44,6 +45,20 @@ if (isset($_GET['generate_password'])) {
         crossorigin='anonymous' />
 </head>
 
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="assets/favicon.ico" type="image/x-icon">
+    <title>Password Generator</title>
+    <!-- Bootstrap -->
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css'
+        integrity='sha512-b2QcS5SsA8tZodcDtGRELiGv5SaKSk1vDHDaQRda0htPYWZ6046lr3kJ5bAAQdpV2mmA/4v0wQF9MyU6/pDIAg=='
+        crossorigin='anonymous' />
+</head>
+
 <body>
     <div class="container">
         <div class="row">
@@ -55,19 +70,17 @@ if (isset($_GET['generate_password'])) {
                         <input type="number" name="length" class="form-control" id="passwordLength"
                             placeholder="Enter password length" required>
                     </div>
-                    <button type="submit" class="btn btn-primary" name="generate_password">Generate Password</button>
-                </form>
-                <?php if (!empty($errorMessage)): ?>
-                    <div class="alert <?= $alertClass ?> mt-5" role="alert">
-                        <strong>Error:</strong>
-                        <?= $errorMessage; ?>
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" id="avoidRepetitionCheckbox"
+                            name="avoid_repetition">
+                        <label class="form-check-label" for="avoidRepetitionCheckbox">Avoid Character Repetition</label>
                     </div>
-                <?php endif; ?>
+                    <button type="submit" class="btn btn-primary mt-3" name="generate_password">Generate
+                        Password</button>
+                </form>
             </div>
         </div>
     </div>
 </body>
-
-</html>
 
 </html>
