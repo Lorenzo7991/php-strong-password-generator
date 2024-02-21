@@ -1,36 +1,6 @@
 <?php
-$passwordLength = '';
-$generatedPassword = '';
-
-// Function to generate a random password.
-function generateRandomPassword($length)
-{
-    // Definition of valid characters for the password.
-    $validChars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#_-&';
-
-    // Length of valid characters.
-    $validCharsLength = strlen($validChars);
-
-    // Variable for the generated password
-    $password = '';
-
-    // Loop for generating the random password.
-    for ($i = 0; $i < $length; $i++) {
-        $randomIndex = rand(0, $validCharsLength - 1);
-        $password .= $validChars[$randomIndex];
-    }
-
-    return $password;
-}
-
-// Check if the form has been submitted
-if (isset($_GET['generate_password'])) {
-    // Check if the password length has been passed
-    if (isset($_GET['length'])) {
-        $passwordLength = $_GET['length'];
-        $generatedPassword = generateRandomPassword($passwordLength);
-    }
-}
+require_once __DIR__ . '/partials/validations.php';
+require_once __DIR__ . '/partials/functions.php';
 ?>
 
 <!DOCTYPE html>
@@ -56,22 +26,26 @@ if (isset($_GET['generate_password'])) {
                     <div class="mb-3">
                         <label for="passwordLength" class="form-label">Password Length:</label>
                         <input type="number" name="length" class="form-control" id="passwordLength"
-                            placeholder="Enter password length" required va">
+                            placeholder="Enter password length">
                     </div>
                     <button type="submit" class="btn btn-primary" name="generate_password">Generate Password</button>
                 </form>
-                <?php if (!empty($generatedPassword)): ?>
-                    <div class="alert bg-success mt-5" role="alert">
-                        <strong>Password generated:</strong>
-                        <i>
-                            <?= $generatedPassword; ?>
-                        </i>
+                <?php if (!empty($generatedPassword) || !empty($errorMessage)): ?>
+                    <div class="alert <?= $alertClass ?> mt-5" role="alert">
+                        <?php if (!empty($generatedPassword)): ?>
+                            <strong>Password generated:</strong>
+                            <i>
+                                <?= $generatedPassword; ?>
+                            </i>
+                        <?php elseif (!empty($errorMessage)): ?>
+                            <strong>Error:</strong>
+                            <?= $errorMessage; ?>
+                        <?php endif; ?>
                     </div>
                 <?php endif; ?>
             </div>
         </div>
     </div>
-
 </body>
 
 </html>
