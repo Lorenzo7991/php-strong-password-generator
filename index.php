@@ -1,6 +1,7 @@
 <?php
 $passwordLength = '';
 $generatedPassword = '';
+
 // Function to generate a random password.
 function generateRandomPassword($length)
 {
@@ -22,12 +23,14 @@ function generateRandomPassword($length)
     return $password;
 }
 
-// Check if the password length has been passed.
-if (isset($_GET['length'])) {
-    $passwordLength = $_GET['length'];
-    $generatedPassword = generateRandomPassword($passwordLength);
+// Check if the form has been submitted
+if (isset($_GET['generate_password'])) {
+    // Check if the password length has been passed
+    if (isset($_GET['length'])) {
+        $passwordLength = $_GET['length'];
+        $generatedPassword = generateRandomPassword($passwordLength);
+    }
 }
-
 ?>
 
 <!DOCTYPE html>
@@ -53,13 +56,15 @@ if (isset($_GET['length'])) {
                     <div class="mb-3">
                         <label for="passwordLength" class="form-label">Password Length:</label>
                         <input type="number" name="length" class="form-control" id="passwordLength"
-                            placeholder="Enter password length" required value="<?= $passwordLength; ?>">
+                            placeholder="Enter password length" required va">
                     </div>
-                    <button type="submit" class="btn btn-primary">Generate Password</button>
+                    <button type="submit" class="btn btn-primary" name="generate_password">Generate Password</button>
                 </form>
-                <div class="alert bg-success mt-5" role="alert">
-                    <?= $generatedPassword; ?>
-                </div>
+                <?php if (!empty($generatedPassword)): ?>
+                    <div class="alert bg-success mt-5" role="alert">
+                        <?= $generatedPassword; ?>
+                    </div>
+                <?php endif; ?>
             </div>
         </div>
     </div>
