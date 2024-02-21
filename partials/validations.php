@@ -1,5 +1,4 @@
 <?php
-// Include functions.php to access the generateRandomPassword function
 require_once __DIR__ . '/functions.php';
 
 $errorMessage = '';
