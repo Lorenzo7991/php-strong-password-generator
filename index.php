@@ -1,10 +1,42 @@
+<?php
+$passwordLength = '';
+$generatedPassword = '';
+// Function to generate a random password.
+function generateRandomPassword($length)
+{
+    // Definition of valid characters for the password.
+    $validChars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#_-&';
+
+    // Length of valid characters.
+    $validCharsLength = strlen($validChars);
+
+    // Variable for the generated password
+    $password = '';
+
+    // Loop for generating the random password.
+    for ($i = 0; $i < $length; $i++) {
+        $randomIndex = rand(0, $validCharsLength - 1);
+        $password .= $validChars[$randomIndex];
+    }
+
+    return $password;
+}
+
+// Check if the password length has been passed.
+if (isset($_GET['length'])) {
+    $passwordLength = $_GET['length'];
+    $generatedPassword = generateRandomPassword($passwordLength);
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="en" data-bs-theme="dark">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="assets/favicon.ico" type="imag/ico">
+    <link rel="icon" href="assets/favicon.ico" type="image/x-icon">
     <title>Password Generator</title>
     <!-- Bootstrap -->
     <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css'
@@ -17,21 +49,21 @@
         <div class="row">
             <div class="col-md-6 offset-md-3">
                 <h1 class="text-center my-5">Password Generator</h1>
-                <form id="passwordForm">
+                <form id="passwordForm" action="index.php" method="GET">
                     <div class="mb-3">
                         <label for="passwordLength" class="form-label">Password Length:</label>
-                        <input type="number" class="form-control" id="passwordLength"
-                            placeholder="Enter password length" required>
+                        <input type="number" name="length" class="form-control" id="passwordLength"
+                            placeholder="Enter password length" required value="<?= $passwordLength; ?>">
                     </div>
                     <button type="submit" class="btn btn-primary">Generate Password</button>
                 </form>
                 <div class="alert bg-success mt-5" role="alert">
-                    Generated password will appear here.
+                    <?= $generatedPassword; ?>
                 </div>
             </div>
         </div>
     </div>
 
-    <body>
+</body>
 
 </html>
