@@ -15,10 +15,8 @@ if (isset($_GET['generate_password'])) {
         // Check if the input is valid
         if ($passwordLength === '') {
             $errorMessage = 'Invalid input. Please enter a value.';
-            $alertClass = 'bg-danger'; // Set alert class to 'bg-danger' for error
         } elseif (!ctype_digit($passwordLength) || $passwordLength < 1) {
             $errorMessage = 'Invalid input. Please enter a positive integer.';
-            $alertClass = 'bg-danger'; // Set alert class to 'bg-danger' for error
         } else {
             // Generate the password
             $generatedPassword = generateRandomPassword($passwordLength);
@@ -64,6 +62,8 @@ if (isset($_GET['generate_password'])) {
         <div class="row">
             <div class="col-md-6 offset-md-3">
                 <h1 class="text-center my-5">Password Generator</h1>
+
+
                 <form id="passwordForm" action="index.php" method="GET">
                     <div class="mb-3">
                         <label for="passwordLength" class="form-label">Password Length:</label>
@@ -78,6 +78,12 @@ if (isset($_GET['generate_password'])) {
                     <button type="submit" class="btn btn-primary mt-3" name="generate_password">Generate
                         Password</button>
                 </form>
+                <!-- Alert for displaying error message -->
+                <?php if (!empty($errorMessage)): ?>
+                    <div class="alert bg-danger mt-3" role="alert">
+                        <?= $errorMessage; ?>
+                    </div>
+                <?php endif; ?>
             </div>
         </div>
     </div>
